@@ -1,0 +1,670 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>আলিম সাহিত্য পাঠ - ৪০টি MCQ কুইজ</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Galada&family=Hind+Siliguri:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Hind Siliguri', sans-serif;
+            background: linear-gradient(135deg, #f0f4f8 0%, #e2e8f0 100%);
+            min-height: 100vh;
+        }
+        .title-font {
+            font-family: 'Galada', cursive;
+        }
+        .glass-card {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.08), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+        .option-btn {
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .option-btn:hover {
+            transform: translateY(-2px);
+        }
+        .option-btn.selected {
+            background-color: #3b82f6 !important;
+            color: white !important;
+            border-color: #2563eb !important;
+            box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+        }
+        .progress-bar-fill {
+            transition: width 0.3s ease-in-out;
+        }
+        /* Custom scrollbar for review section */
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 6px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: #f1f5f9;
+            border-radius: 4px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 4px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8;
+        }
+    </style>
+</head>
+<body class="flex items-center justify-center p-3 sm:p-6">
+
+    <div class="w-full max-w-3xl glass-card rounded-2xl p-4 sm:p-8 relative overflow-hidden">
+        
+        <!-- Header Banner -->
+        <div class="text-center mb-6 border-b border-slate-200 pb-4">
+            <h1 class="text-3xl sm:text-4xl text-blue-700 title-font tracking-wide mb-1">আলিম সাহিত্য পাঠ কুইজ</h1>
+            <p class="text-slate-600 text-sm sm:text-base">সংকলিত ৫টি গল্প ও প্রবন্ধ থেকে ৪০টি বহুনির্বাচনি প্রশ্ন</p>
+        </div>
+
+        <!-- Start Screen -->
+        <div id="start-screen" class="text-center py-6 sm:py-10 space-y-6">
+            <div class="bg-blue-50 border border-blue-200 rounded-xl p-5 text-left text-slate-700 max-w-xl mx-auto space-y-3 shadow-sm">
+                <h2 class="font-bold text-lg text-blue-900 border-b border-blue-200 pb-2 flex items-center">
+                    <svg class="w-5 h-5 mr-2 text-blue-600" fill="currentColor" viewBox="0 0 20 20"><path d="M9 2a1 1 0 000 2h2a1 1 0 100-2H9z"/><path fill-rule="evenodd" d="M4 5a2 2 0 012-2 3 3 0 003 3h2a3 3 0 003-3 2 2 0 012 2v11a2 2 0 01-2 2H6a2 2 0 01-2-2V5zm3 4a1 1 0 000 2h6a1 1 0 100-2H7zm0 4a1 1 0 100 2h6a1 1 0 100-2H7z" clip-rule="evenodd"/></svg>
+                    কুইজ নির্দেশাবলী:
+                </h2>
+                <ul class="list-disc list-inside space-y-1.5 text-sm sm:text-base">
+                    <li>সর্বমোট প্রশ্ন: <span class="font-bold text-blue-700">৪০টি</span> (প্রতি পাঠ হতে ৮টি করে)।</li>
+                    <li>পাঠসমূহ: <span class="font-medium text-slate-900">অপরিচিতা, বাংলার নবয লেখকদিগের প্রতি নিবেদন, সাহিত্যে খেলা, বিলাসী, অর্ধাঙ্গী</span>।</li>
+                    <li>প্রতিটি প্রশ্নের সময়: <span class="font-bold text-amber-600">৫০ সেকেন্ড</span>।</li>
+                    <li>সময় শেষ হলে স্বয়ংক্রিয়ভাবে পরবর্তী প্রশ্ন চলে আসবে।</li>
+                    <li>পরীক্ষা শেষে সঠিক উত্তর ও ফলাফলের বিস্তৃত বিবরণ দেখতে পাবেন।</li>
+                </ul>
+            </div>
+
+            <button onclick="startQuiz()" class="w-full sm:w-auto px-10 py-3.5 bg-blue-600 hover:bg-blue-700 text-white font-bold text-lg rounded-xl shadow-lg hover:shadow-xl transition-all transform hover:-translate-y-0.5">
+                কুইজ শুরু করুন 🚀
+            </button>
+        </div>
+
+        <!-- Quiz Screen -->
+        <div id="quiz-screen" class="hidden space-y-5">
+            <!-- Progress & Timer Bar -->
+            <div class="space-y-2">
+                <div class="flex justify-between items-center text-sm font-semibold text-slate-600">
+                    <span id="chapter-tag" class="bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-xs sm:text-sm font-bold">পাঠের নাম</span>
+                    <div id="timer-badge" class="flex items-center bg-amber-100 text-amber-800 px-3 py-1 rounded-full font-mono font-bold text-sm">
+                        <svg class="w-4 h-4 mr-1 animate-pulse" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clip-rule="evenodd"/></svg>
+                        <span id="timer-text">৫০ সে.</span>
+                    </div>
+                </div>
+
+                <!-- Progress Bar -->
+                <div class="w-full bg-slate-200 h-2.5 rounded-full overflow-hidden">
+                    <div id="progress-bar" class="bg-blue-600 h-full progress-bar-fill" style="width: 2.5%;"></div>
+                </div>
+
+                <div class="flex justify-between items-center text-xs text-slate-500 font-medium pt-1">
+                    <span id="question-counter">প্রশ্ন ১ / ৪০</span>
+                    <span id="answered-counter">উত্তর প্রদান: ০/৪০</span>
+                </div>
+            </div>
+
+            <!-- Question Area -->
+            <div class="bg-slate-50 p-4 sm:p-6 rounded-xl border border-slate-200 shadow-sm min-h-[100px] flex items-center">
+                <h3 id="question-text" class="text-lg sm:text-xl font-bold text-slate-800 leading-relaxed">
+                    প্রশ্ন এখানে আসবে...
+                </h3>
+            </div>
+
+            <!-- Options Container -->
+            <div id="options-container" class="grid grid-cols-1 gap-3">
+                <!-- Dynamically Generated Buttons -->
+            </div>
+
+            <!-- Footer Buttons -->
+            <div class="flex justify-between items-center pt-2">
+                <button id="prev-btn" onclick="prevQuestion()" class="px-5 py-2.5 bg-slate-200 hover:bg-slate-300 text-slate-700 font-semibold rounded-lg transition text-sm sm:text-base hidden">
+                    ← পূর্ববর্তী
+                </button>
+                <div class="flex-grow"></div>
+                <button id="next-btn" onclick="nextQuestion()" class="px-7 py-2.5 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-lg shadow transition text-sm sm:text-base flex items-center">
+                    <span id="next-btn-text">পরবর্তী</span>
+                    <svg class="w-4 h-4 ml-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+                </button>
+            </div>
+        </div>
+
+        <!-- Results Screen -->
+        <div id="results-screen" class="hidden space-y-6">
+            <div class="text-center space-y-2">
+                <h2 class="text-2xl sm:text-3xl font-bold text-slate-800">পরীক্ষার ফলাফল</h2>
+                <p class="text-slate-600 text-sm">আপনার উত্তরপত্রের বিস্তারিত বিবরণ নিচে দেওয়া হলো</p>
+            </div>
+
+            <!-- Score Summary Cards -->
+            <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 text-center">
+                <div class="bg-blue-50 border border-blue-200 p-4 rounded-xl">
+                    <div class="text-xs font-semibold text-blue-600 uppercase">মোট নম্বর</div>
+                    <div id="score-text" class="text-2xl sm:text-3xl font-extrabold text-blue-900 mt-1">০ / ৪০</div>
+                </div>
+                <div class="bg-emerald-50 border border-emerald-200 p-4 rounded-xl">
+                    <div class="text-xs font-semibold text-emerald-600 uppercase">সঠিক উত্তর</div>
+                    <div id="correct-count" class="text-2xl sm:text-3xl font-extrabold text-emerald-700 mt-1">০</div>
+                </div>
+                <div class="bg-rose-50 border border-rose-200 p-4 rounded-xl">
+                    <div class="text-xs font-semibold text-rose-600 uppercase">ভুল উত্তর</div>
+                    <div id="incorrect-count" class="text-2xl sm:text-3xl font-extrabold text-rose-700 mt-1">০</div>
+                </div>
+                <div class="bg-amber-50 border border-amber-200 p-4 rounded-xl">
+                    <div class="text-xs font-semibold text-amber-600 uppercase">উত্তরহীন</div>
+                    <div id="skipped-count" class="text-2xl sm:text-3xl font-extrabold text-amber-700 mt-1">০</div>
+                </div>
+            </div>
+
+            <!-- Action Buttons -->
+            <div class="flex justify-center pt-2">
+                <button onclick="restartQuiz()" class="px-8 py-3 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-xl shadow-lg transition flex items-center">
+                    <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/></svg>
+                    পুনরায় কুইজ দিন
+                </button>
+            </div>
+
+            <!-- Detailed Answer Review -->
+            <div class="border-t border-slate-200 pt-4">
+                <h3 class="text-lg font-bold text-slate-800 mb-3 flex items-center">
+                    <svg class="w-5 h-5 mr-2 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+                    উত্তরপত্র পর্যালোচনা:
+                </h3>
+                <div id="review-section" class="space-y-3 max-h-96 overflow-y-auto pr-2 custom-scrollbar">
+                    <!-- Cards injected by JS -->
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+<script>
+// Exactly 40 questions based EXCLUSIVELY on the 5 marked chapters (8 questions each)
+const quizData = [
+    // --- ১. অপরিচিতা (১-৮) ---
+    {
+        chapter: "অপরিচিতা",
+        question: "১. 'অপরিচিতা' গল্পটি কোন পুরুষ বা জবানিতে রচিত?",
+        options: ["উত্তম পুরুষ", "মধ্যম পুরুষ", "নাম পুরুষ", "প্রথম পুরুষ"],
+        correct: 0,
+        explanation: "গল্পটির কথক অনুপম নিজে, তাই এটি উত্তম পুরুষে (আমি/আমার) রচিত।"
+    },
+    {
+        chapter: "অপরিচিতা",
+        question: "২. অনুপমের বয়স কত যখন সে তার জীবনকথা বলা শুরু করে?",
+        options: ["সাতাশ", "পঁচিশ", "চব্বিশ", "ত্রিশ"],
+        correct: 0,
+        explanation: "গল্পের শুরুতেই অনুপম উল্লেখ করে: 'আজ আমার বয়স সাতাশ মাত্র।'"
+    },
+    {
+        chapter: "অপরিচিতা",
+        question: "৩. অনুপমের সুন্দর চেহারার জন্য পণ্ডিতমশায় তাকে কিসের সাথে তুলনা করে বিদ্রুপ করতেন?",
+        options: ["শিমুল ফুল", "কদম ফুল", "গোলাপ", "শাপলা"],
+        correct: 0,
+        explanation: "পণ্ডিতমশাই অনুপমকে 'শিমুল ফুল ও মাকাল ফল'-এর সাথে তুলনা করে বিদ্রুপ করতেন।"
+    },
+    {
+        chapter: "অপরিচিতা",
+        question: "৪. অনুপমের মামা কলকাতার বাইরের পৃথিবীকে কোন দ্বীপের অংশ মনে করতেন?",
+        options: ["আন্দামান", "সুবর্ণদ্বীপ", "শ্রীলঙ্কা", "নিঝুম দ্বীপ"],
+        correct: 0,
+        explanation: "অনুপমের মামা কলকাতার বাইরের জগৎকে আন্দামান দ্বীপের মতো বলে মনে করতেন।"
+    },
+    {
+        chapter: "অপরিচিতা",
+        question: "৫. বিয়ের সময় কল্যাণীর বয়স কত ছিল?",
+        options: ["পনেরো বছর", "চৌদ্দ বছর", "ষোলো বছর", "সতেরো বছর"],
+        correct: 0,
+        explanation: "গল্পে স্পষ্ট উল্লেখ আছে বিয়ের সময় কল্যাণীর বয়স ছিল পনেরো বছর।"
+    },
+    {
+        chapter: "অপরিচিতা",
+        question: "৬. কন্যা আশীর্বাদ করার জন্য কাকে পাঠানো হয়েছিল?",
+        options: ["বিনু দাদা", "হরিশ", "মামা", "অনুপম"],
+        correct: 0,
+        explanation: "অনুপমের পিসতুতো ভাই বিনু দাদাকে কন্যা আশীর্বাদ করার জন্য পাঠানো হয়েছিল।"
+    },
+    {
+        chapter: "অপরিচিতা",
+        question: "৭. শম্ভুনাথ সেন পেশায় কী ছিলেন?",
+        options: ["ডাক্তার", "উকিল", "শিক্ষক", "ব্যবসায়ী"],
+        correct: 0,
+        explanation: "কল্যাণীর পিতা শম্ভুনাথ সেন পেশায় একজন ডাক্তার ছিলেন।"
+    },
+    {
+        chapter: "অপরিচিতা",
+        question: "৮. 'অপরিচিতা' গল্পে মূলত কোন কুপ্রথার বিরুদ্ধে প্রতিবাদ জানানো হয়েছে?",
+        options: ["পণপ্রথা বা যৌতুকপ্রথা", "সতীদাহ প্রথা", "বাল্যবিবাহ", "জাতিভেদ"],
+        correct: 0,
+        explanation: "গল্পটিতে তৎকালীন বাঙালি সমাজের যৌতুক বা পণপ্রথার অমানবিকতার তীব্র প্রতিবাদ ফুটিয়ে তোলা হয়েছে।"
+    },
+
+    // --- ২. বাংলার নবয লেখকদিগের প্রতি নিবেদন (৯-১৬) ---
+    {
+        chapter: "বাংলার নবয লেখকদিগের প্রতি নিবেদন",
+        question: "৯. বঙ্কিমচন্দ্রের মতে কিসের জন্য লেখা উচিত নয়?",
+        options: ["যশ বা অর্থ উপার্জনের জন্য", "লোকশিক্ষার জন্য", "সত্য প্রকাশের জন্য", "আনন্দ পাওয়ার জন্য"],
+        correct: 0,
+        explanation: "বঙ্কিমচন্দ্র লিখেছেন—যশ বা টাকার জন্য সাহিত্য রচনা করা অনুচিত।"
+    },
+    {
+        chapter: "বাংলার নবয লেখকদিগের প্রতি নিবেদন",
+        question: "১০. 'যাহা অসত্য, তাহা কদাচ লিখিবেন না'—এটি বঙ্কিমচন্দ্রের কোন উপদেশের অন্তর্ভুক্ত?",
+        options: ["সত্য ও ধর্মানুশীলন", "যশলিপ্সা", "অলংকার ব্যবহার", "সমালোচনা"],
+        correct: 0,
+        explanation: "লেখার মূল উদ্দেশ্যে সত্য ও ধর্ম রক্ষাকে সর্বাগ্রে স্থান দেওয়া হয়েছে।"
+    },
+    {
+        chapter: "বাংলার নবয লেখকদিগের প্রতি নিবেদন",
+        question: "১১. অলংকার ব্যবহার সম্পর্কে বঙ্কিমচন্দ্রের মতামত কী?",
+        options: ["প্রয়োজন ব্যতীত অলংকার ব্যবহার করা অনুচিত", "যত বেশি সম্ভব অলংকার দেওয়া উচিত", "অলংকার ছাড়া লেখা যায় না", "অলংকার কাব্যেই শুধু চলে"],
+        correct: 0,
+        explanation: "যেখানে প্রয়োজন নেই সেখানে অনর্থক অলংকার ব্যবহার রচনার সৌন্দর্য নষ্ট করে।"
+    },
+    {
+        chapter: "বাংলার নবয লেখকদিগের প্রতি নিবেদন",
+        question: "১২. কার অনুকরণ বা অন্ধ অনুসরণ করতে বঙ্কিমচন্দ্র নিষেধ করেছেন?",
+        options: ["বিখ্যাত লেখকদের", "শিক্ষকদের", "সহপাঠীদের", "প্রাচীন মুনিদের"],
+        correct: 0,
+        explanation: "অন্য লেখকের রচনার অন্ধ অনুকরণ না করে স্বকীয়তা বজায় রাখার নির্দেশ দেওয়া হয়েছে।"
+    },
+    {
+        chapter: "বাংলার নবয লেখকদিগের প্রতি নিবেদন",
+        question: "১৩. যা বলা বাহুল্য, বঙ্কিমচন্দ্রের মতে তা—",
+        options: ["না বলাই ভালো ও কেটে ফেলা উচিত", "দ্বিগুণ বলা উচিত", "সংক্ষেপে লেখা উচিত", "অলংকার দিয়ে ঢাকা উচিত"],
+        correct: 0,
+        explanation: "রচনায় অতিরিক্ত বা বাহুল্য কথা বর্জন করার পরামর্শ দিয়েছেন তিনি।"
+    },
+    {
+        chapter: "বাংলার নবয লেখকদিগের প্রতি নিবেদন",
+        question: "১৪. 'বাংলার নবয লেখকদিগের প্রতি নিবেদন' প্রবন্ধটি প্রথম কোন পত্রিকায় প্রকাশিত হয়?",
+        options: ["প্রচার", "বঙ্গদর্শন", "সবুজপত্র", "তত্ত্ববোধিনী"],
+        correct: 0,
+        explanation: "প্রবন্ধটি ১৮৮৪ সালে বঙ্কিমচন্দ্র সম্পাদিত 'প্রচার' পত্রিকায় প্রথম প্রকাশিত হয়।"
+    },
+    {
+        chapter: "বাংলার নবয লেখকদিগের প্রতি নিবেদন",
+        question: "১৫. বিদ্যা প্রকাশের উদ্দেশ্যে সাহিত্য রচনা করলে কী ঘটে?",
+        options: ["রচনা কদর্য হয় এবং পাঠক বিরক্ত হয়", "লেখক ধনী হন", "সাহিত্য অমর হয়", "সমাজ উন্নত হয়"],
+        correct: 0,
+        explanation: "বিদ্যা জাহির করার উদ্দেশ্যে লিখলে রচনা গুরুগম্ভীর ও কদর্য হয়ে পড়ে।"
+    },
+    {
+        chapter: "বাংলার নবয লেখকদিগের প্রতি নিবেদন",
+        question: "১৬. বঙ্কিমচন্দ্রের মতে সাহিত্যের মুখ্য উদ্দেশ্য কী হওয়া উচিত?",
+        options: ["সত্য ও ধর্ম রক্ষা এবং লোকহিত", "আত্মপ্রচার", "রাজতোষণ", "বিনোদন"],
+        correct: 0,
+        explanation: "সাহিত্যের প্রধান লক্ষ্য হওয়া উচিত মানবকল্যাণ বা লোকহিত সাধন ও সত্য প্রকাশ।"
+    },
+
+    // --- ৩. সাহিত্যে খেলা (১৭-২৪) ---
+    {
+        chapter: "সাহিত্যে খেলা",
+        question: "১৭. প্রমথ চৌধুরীর মতে সাহিত্যের মূল কাজ কী?",
+        options: ["মানুষকে আনন্দ দেওয়া", "নীতিশিক্ষা দেওয়া", "তথ্য সরবরাহ করা", "ধর্ম প্রচার করা"],
+        correct: 0,
+        explanation: "প্রমথ চৌধুরীর মতে সাহিত্যের কোনো উদ্দেশ্যমূলক উদ্দেশ্য নেই, এর মূল কাজ অনাবিল আনন্দ দান।"
+    },
+    {
+        chapter: "সাহিত্যে খেলা",
+        question: "১৮. 'সাহিত্যে খেলা' প্রবন্ধে খেলা বলতে লেখক কী বুঝিয়েছেন?",
+        options: ["মনের নিরাসক্ত আনন্দময় সৃষ্টিশীলতা", "মাঠে ফুটবল খেলা", "সময় নষ্ট করা", "চালবাজি"],
+        correct: 0,
+        explanation: "খেলা যেমন কোনো বাস্তব বস্তুগত লাভের জন্য নয়, সাহিত্যও মনের তেমনই একটি স্বাধীন আনন্দময় খেলা।"
+    },
+    {
+        chapter: "সাহিত্যে খেলা",
+        question: "১৯. প্রমথ চৌধুরী কোন ছদ্মনামে সাহিত্য চর্চা করতেন?",
+        options: ["বীরবল", "টেকচাঁদ ঠাকুর", "ভনিতা", "পারশুরাম"],
+        correct: 0,
+        explanation: "প্রমথ চৌধুরী 'বীরবল' ছদ্মনামে তাঁর বিখ্যাত হালকা চালের প্রবন্ধসমূহ লিখতেন।"
+    },
+    {
+        chapter: "সাহিত্যে খেলা",
+        question: "২০. প্রমথ চৌধুরী কোন সাহিত্য পত্রিকার সম্পাদক ছিলেন?",
+        options: ["সবুজপত্র", "বঙ্গদর্শন", "সচিত্র ভারত", "কল্লোল"],
+        correct: 0,
+        explanation: "তিনি ১৯১৪ সালে প্রকাশিত ঐতিহাসিক 'সবুজপত্র' পত্রিকার সম্পাদক ছিলেন।"
+    },
+    {
+        chapter: "সাহিত্যে খেলা",
+        question: "২১. সমাজের মনোরঞ্জন করতে গেলে সাহিত্য কী হারায়?",
+        options: ["তার নিজস্ব স্বধর্ম ও প্রাণশক্তি", "অর্থ", "পাঠক", "শব্দকোষ"],
+        correct: 0,
+        explanation: "বাজারচলতি পাঠকের সন্তুষ্টির জন্য লিখতে গেলে সাহিত্য তার মৌলিকতা ও স্বধর্ম হারায়।"
+    },
+    {
+        chapter: "সাহিত্যে খেলা",
+        question: "২২. প্রমথ চৌধুরী বাংলা সাহিত্যের কোন গদ্যরীতির পথিকৃৎ?",
+        options: ["চলিত গদ্যরীতি", "সাধু গদ্যরীতি", "মিশ্র ভাষা", "সংস্কৃতপ্রধান ভাষা"],
+        correct: 0,
+        explanation: "তিনি বাংলা সাহিত্যে চটুল ও বুদ্ধিমত্তাপূর্ণ চলিত গদ্যরীতির প্রতিষ্ঠা করেন।"
+    },
+    {
+        chapter: "সাহিত্যে খেলা",
+        question: "২৩. প্রমথ চৌধুরীর মতে ডারউইন মনের কোন দিকটিকে অবহেলা করার জন্য অনুতাপ করেছিলেন?",
+        options: ["কাব্য ও সংগীতের আনন্দ", "গণিত চর্চা", "রাজনীতি", "বাণিজ্য"],
+        correct: 0,
+        explanation: "বিজ্ঞানচর্চায় মগ্ন থাকায় কাব্য ও সংগীতের আনন্দ থেকে বঞ্চিত হওয়ার কথা ডারউইন নিজেই আক্ষেপ করেছিলেন।"
+    },
+    {
+        chapter: "সাহিত্যে খেলা",
+        question: "২৪. কাজের জগতের বাইরে সাহিত্যের অবস্থান কেন?",
+        options: ["সাহিত্য প্রবৃত্তি ও প্রয়োজনের খাঁচামুক্ত আনন্দের জগৎ", "সাহিত্য কোনো কাজে আসে না", "লেখক অলস", "সাহিত্য শুধু ধনী ব্যক্তিদের জন্য"],
+        correct: 0,
+        explanation: "সাহিত্য জাগতিক লাভ-ক্ষতির হিসেবমুক্ত ও আত্মার স্বাধীন বিকাশের ক্ষেত্র।"
+    },
+
+    // --- ৪. বিলাসী (২৫-৩২) ---
+    {
+        chapter: "বিলাসী",
+        question: "২৫. 'বিলাসী' গল্পের লেখক কে?",
+        options: ["শরৎচন্দ্র চট্টোপাধ্যায়", "রবীন্দ্রনাথ ঠাকুর", "বঙ্কিমচন্দ্র চট্টোপাধ্যায়", "প্রমথ চৌধুরী"],
+        correct: 0,
+        explanation: "'বিলাসী' শরৎচন্দ্র চট্টোপাধ্যায়ের অন্যতম সেরা ছোটগল্প।"
+    },
+    {
+        chapter: "বিলাসী",
+        question: "২৬. মৃত্যুঞ্জয়ের বাবার পেশা বা সম্পদ কেমন ছিল?",
+        options: ["অনেক জমিজমা কিন্তু অনাথ মৃত্যুঞ্জয় একা থাকত", "খুব দরিদ্র ভিখারি", "রাজমিস্ত্রি", "সরকারি চাকরিজীবী"],
+        correct: 0,
+        explanation: "মৃত্যুঞ্জয়ের বিষয়-সম্পত্তি ও বাগান অনেক ছিল, কিন্তু সে একা নিরাশ্রয় থাকত।"
+    },
+    {
+        chapter: "বিলাসী",
+        question: "২৭. মৃত্যুঞ্জয়কে কে সেবা শুশ্রূষা করে সুস্থ করে তুলেছিল?",
+        options: ["বিলাসী", "খুড়া", "অন্নদা", "ন্যাড়া"],
+        correct: 0,
+        explanation: "মৃত্যুঞ্জয়ের কঠিন অসুখের সময় সাপুড়ের মেয়ে বিলাসী নিজের প্রাণ দিয়ে সেবা করে তাকে বাঁচিয়ে তোলে।"
+    },
+    {
+        chapter: "বিলাসী",
+        question: "২৮. বিলাসী কোন সাপুড়ের মেয়ে ছিল?",
+        options: ["সাপুড়ে সাপের বিষ ঝাড়ত, সাপুড়ের মেয়ে বিলাসী", "কামারের মেয়ে", "জেলের মেয়ে", "তাঁতির মেয়ে"],
+        correct: 0,
+        explanation: "বিলাসী ছিল এক বৃদ্ধ সাপুড়ের মেয়ে।"
+    },
+    {
+        chapter: "বিলাসী",
+        question: "২৯. মৃত্যুঞ্জয় বিলাসীকে বিয়ের পর কী পেশা গ্রহণ করেছিল?",
+        options: ["সাপ ধরা বা সাপুড়ের কাজ", "শিক্ষকতা", "দোকানদারি", "কৃষিকাজ"],
+        correct: 0,
+        explanation: "জাতিচ্যুত হয়ে মৃত্যুঞ্জয় বিলাসীর সাপুড়ে পরিবারে আশ্রয় নেয় এবং সাপ ধরার কাজ শেখে।"
+    },
+    {
+        chapter: "বিলাসী",
+        question: "৩০. মৃত্যুঞ্জয় কীভাবে মারা যায়?",
+        options: ["খরিশ সাপের কামড়ে", "কঠিন জ্বরে", "বিষ খেয়ে", "পানিতে ডুবে"],
+        correct: 0,
+        explanation: "একটি গোখরো বা তীব্র বিষধর খরিশ সাপের কামড়ে মৃত্যুঞ্জয় মারা যায়।"
+    },
+    {
+        chapter: "বিলাসী",
+        question: "৩১. মৃত্যুঞ্জয়ের মৃত্যুর পর বিলাসী কী করেছিল?",
+        options: ["বিষ খেয়ে আত্মহত্যা করেছিল", "বাপের বাড়ি চলে গিয়েছিল", "গ্রামে থেকে গিয়েছিল", "অন্যকে বিয়ে করেছিল"],
+        correct: 0,
+        explanation: "মৃত্যুঞ্জয়ের শোকে বিরহ সহ্য করতে না পেরে বিলাসী সাত দিনের মাথায় বিষ খেয়ে আত্মাহুতি দেয়।"
+    },
+    {
+        chapter: "বিলাসী",
+        question: "৩২. 'বিলাসী' গল্পটি কার জবানিতে বা বর্ণনায় বর্ণিত হয়েছে?",
+        options: ["ন্যাড়া", "মৃত্যুঞ্জয়", "খুড়া", "গ্রামের মেম্বার"],
+        correct: 0,
+        explanation: "'ন্যাড়া' নামক চরিত্রটির বর্ণনায় বা উত্তম পুরুষে গল্পটি পরিবেশিত।"
+    },
+
+    // --- ৫. অর্ধাঙ্গী (৩৩-৪০) ---
+    {
+        chapter: "অর্ধাঙ্গী",
+        question: "৩৩. 'অর্ধাঙ্গী' প্রবন্ধের রচয়িতা কে?",
+        options: ["বেগম রোকেয়া সাখাওয়াত হোসেন", "স্বর্ণকুমারী দেবী", "কামিনী রায়", "সুফিয়া কামাল"],
+        correct: 0,
+        explanation: "'অর্ধাঙ্গী' নারীজাগরণের অগ্রদূত বেগম রোকেয়া সাখাওয়াত হোসেনের প্রবন্ধ।"
+    },
+    {
+        chapter: "অর্ধাঙ্গী",
+        question: "৩৪. বেগম রোকেয়া পুরুষের পাশে নারীকে সমাজের কী হিসেবে বর্ণনা করেছেন?",
+        options: ["অর্ধাঙ্গী বা সমান অংশীদার", "অধীনস্থ", "সাজসজ্জার বস্তু", "দাসী"],
+        correct: 0,
+        explanation: "নারী সমাজের অর্ধেক অঙ্গ, তাই সে পুরুষের সমান অংশীদার বা অর্ধাঙ্গী।"
+    },
+    {
+        chapter: "অর্ধাঙ্গী",
+        question: "৩৫. সমাজরূপ রথের দুটি চাকা বলতে রোকেয়া কাদের বুঝিয়েছেন?",
+        options: ["নর ও নারী", "ধনী ও দরিদ্র", "শিক্ষা ও ধর্ম", "শাসক ও প্রজা"],
+        correct: 0,
+        explanation: "সমাজকে সচল রাখতে নর ও নারী—এই দুই চাকাকে সমানভাবে অগ্রসর হতে হবে।"
+    },
+    {
+        chapter: "অর্ধাঙ্গী",
+        question: "৩৬. রোকেয়ার মতে ভারতের নারীদের অবনতির মূল কারণ কী?",
+        options: ["উপযুক্ত শিক্ষা ও অধিকারের অভাব", "অতিরিক্ত অলংকার", "অলসতা", "শারীরিক দুর্বলতা"],
+        correct: 0,
+        explanation: "নারীদের শিক্ষা ও স্বাধীনতা থেকে বঞ্চিত করে রাখাই তাদের মানসিক অবনতির কারণ।"
+    },
+    {
+        chapter: "অর্ধাঙ্গী",
+        question: "৩৭. 'অর্ধাঙ্গী' প্রবন্ধে অলংকারকে বেগম রোকেয়া কিসের সাথে তুলনা করেছেন?",
+        options: ["দাসত্বের শৃঙ্খল বা বন্দিদশার প্রতীক", "সৌন্দর্যের প্রতীক", "সম্পদের প্রতীক", "সম্মানের প্রতীক"],
+        correct: 0,
+        explanation: "তিনি স্বর্ণালংকারকে হাত-পায়ের গহনা না বলে দাসত্বের লোহার শৃঙ্খল বলে মন্তব্য করেছেন।"
+    },
+    {
+        chapter: "অর্ধাঙ্গী",
+        question: "৩৮. নারী যদি পিছে পড়ে থাকে, তবে সমাজ বা জাতির অবস্থা কেমন হবে?",
+        options: ["জাতি পঙ্গু হয়ে অর্ধেক উন্নতিতে থমকে থাকবে", "সমাজ এগিয়ে যাবে", "কোনো প্রভাব পড়বে না", "ধনসম্পদ বাড়বে"],
+        correct: 0,
+        explanation: "একটি দেহের অর্ধেক অংশ অবশ থাকলে যেমন শরীর চলতে পারে না, তেমনি নারীকে পঙ্গু রাখলে জাতি থমকে থাকবে।"
+    },
+    {
+        chapter: "অর্ধাঙ্গী",
+        question: "৩৯. বেগম রোকেয়ার মতে শারীরিক ও মানসিকভাবে নারীকে পুরুষেরা কীভাবে রেখেছে?",
+        options: ["অবিকশিত ও পঙ্গু করে", "স্বাধীন করে", "সম্মানিত করে", "নেতৃত্বের আসনে"],
+        correct: 0,
+        explanation: "সুযোগ ও চর্চার অভাবে নারীদের বুদ্ধিবৃত্তি অবিকশিত হয়ে পড়েছে।"
+    },
+    {
+        chapter: "অর্ধাঙ্গী",
+        question: "৪০. 'অর্ধাঙ্গী' প্রবন্ধটি বেগম রোকেয়ার কোন বিখ্যাত গ্রন্থ বা ভাবনার অংশ?",
+        options: ["মতিচূর", "সুলতানার স্বপ্ন", "পদ্মরাগ", "অবরোধবাসিনী"],
+        correct: 0,
+        explanation: "প্রবন্ধটি তাঁর বিখ্যাত প্রবন্ধ সংকলন 'মতিচূর' (প্রথম খণ্ড)-এর অন্তর্গত।"
+    }
+];
+
+let currentQuestionIndex = 0;
+let userAnswers = new Array(quizData.length).fill(null);
+let timerInterval;
+const TIME_PER_QUESTION = 50;
+let timeLeft = TIME_PER_QUESTION;
+
+function startQuiz() {
+    document.getElementById('start-screen').classList.add('hidden');
+    document.getElementById('quiz-screen').classList.remove('hidden');
+    loadQuestion();
+}
+
+function loadQuestion() {
+    clearInterval(timerInterval);
+    timeLeft = TIME_PER_QUESTION;
+    updateTimerDisplay();
+
+    const currentQ = quizData[currentQuestionIndex];
+    document.getElementById('chapter-tag').innerText = `পাঠ: ${currentQ.chapter}`;
+    document.getElementById('question-counter').innerText = `প্রশ্ন ${currentQuestionIndex + 1} / ${quizData.length}`;
+    document.getElementById('question-text').innerText = currentQ.question;
+
+    // Progress bar update
+    const progressPercent = ((currentQuestionIndex + 1) / quizData.length) * 100;
+    document.getElementById('progress-bar').style.width = `${progressPercent}%`;
+
+    // Answered counter update
+    const answeredCount = userAnswers.filter(ans => ans !== null).length;
+    document.getElementById('answered-counter').innerText = `উত্তর প্রদান: ${answeredCount}/${quizData.length}`;
+
+    // Options Rendering
+    const optionsContainer = document.getElementById('options-container');
+    optionsContainer.innerHTML = '';
+
+    const optionLabels = ["ক", "খ", "গ", "ঘ"];
+    currentQ.options.forEach((opt, index) => {
+        const btn = document.createElement('button');
+        btn.className = `option-btn w-full text-left p-3.5 sm:p-4 rounded-xl border-2 border-slate-200 bg-white hover:border-blue-300 hover:bg-blue-50/50 flex items-center font-medium text-slate-700 text-sm sm:text-base`;
+        
+        if (userAnswers[currentQuestionIndex] === index) {
+            btn.classList.add('selected');
+        }
+
+        btn.innerHTML = `
+            <span class="w-7 h-7 sm:w-8 sm:h-8 rounded-lg bg-slate-100 border border-slate-300 flex items-center justify-center font-bold mr-3 text-sm text-slate-600 transition-colors">
+                ${optionLabels[index]}
+            </span>
+            <span class="flex-grow">${opt}</span>
+        `;
+        
+        btn.onclick = () => selectOption(index);
+        optionsContainer.appendChild(btn);
+    });
+
+    // Navigation buttons toggle
+    const prevBtn = document.getElementById('prev-btn');
+    if (currentQuestionIndex > 0) {
+        prevBtn.classList.remove('hidden');
+    } else {
+        prevBtn.classList.add('hidden');
+    }
+
+    const nextBtnText = document.getElementById('next-btn-text');
+    if (currentQuestionIndex === quizData.length - 1) {
+        nextBtnText.innerText = 'কুইজ সম্পন্ন করুন';
+    } else {
+        nextBtnText.innerText = 'পরবর্তী';
+    }
+
+    startTimer();
+}
+
+function selectOption(index) {
+    userAnswers[currentQuestionIndex] = index;
+    const buttons = document.querySelectorAll('.option-btn');
+    buttons.forEach((btn, i) => {
+        if (i === index) {
+            btn.classList.add('selected');
+        } else {
+            btn.classList.remove('selected');
+        }
+    });
+
+    const answeredCount = userAnswers.filter(ans => ans !== null).length;
+    document.getElementById('answered-counter').innerText = `উত্তর প্রদান: ${answeredCount}/${quizData.length}`;
+}
+
+function startTimer() {
+    timerInterval = setInterval(() => {
+        timeLeft--;
+        updateTimerDisplay();
+        if (timeLeft <= 0) {
+            clearInterval(timerInterval);
+            nextQuestion();
+        }
+    }, 1000);
+}
+
+function updateTimerDisplay() {
+    const timerText = document.getElementById('timer-text');
+    const timerBadge = document.getElementById('timer-badge');
+    timerText.innerText = `${timeLeft} সে.`;
+
+    if (timeLeft <= 10) {
+        timerBadge.className = "flex items-center bg-rose-100 text-rose-800 px-3 py-1 rounded-full font-mono font-bold text-sm animate-bounce";
+    } else {
+        timerBadge.className = "flex items-center bg-amber-100 text-amber-800 px-3 py-1 rounded-full font-mono font-bold text-sm";
+    }
+}
+
+function prevQuestion() {
+    if (currentQuestionIndex > 0) {
+        currentQuestionIndex--;
+        loadQuestion();
+    }
+}
+
+function nextQuestion() {
+    clearInterval(timerInterval);
+    if (currentQuestionIndex < quizData.length - 1) {
+        currentQuestionIndex++;
+        loadQuestion();
+    } else {
+        finishQuiz();
+    }
+}
+
+function finishQuiz() {
+    clearInterval(timerInterval);
+    document.getElementById('quiz-screen').classList.add('hidden');
+    document.getElementById('results-screen').classList.remove('hidden');
+
+    let correctCount = 0;
+    let incorrectCount = 0;
+    let skippedCount = 0;
+
+    const reviewSection = document.getElementById('review-section');
+    reviewSection.innerHTML = '';
+
+    const optionLabels = ["ক", "খ", "গ", "ঘ"];
+
+    quizData.forEach((q, index) => {
+        const userAns = userAnswers[index];
+        const isCorrect = userAns === q.correct;
+        const isSkipped = userAns === null;
+
+        if (isCorrect) correctCount++;
+        else if (isSkipped) skippedCount++;
+        else incorrectCount++;
+
+        const card = document.createElement('div');
+        let borderClass = isCorrect ? 'border-emerald-400 bg-emerald-50/40' : (isSkipped ? 'border-amber-400 bg-amber-50/40' : 'border-rose-400 bg-rose-50/40');
+        let statusBadge = isCorrect ? '<span class="text-xs bg-emerald-100 text-emerald-800 font-bold px-2.5 py-0.5 rounded">সঠিক</span>' : (isSkipped ? '<span class="text-xs bg-amber-100 text-amber-800 font-bold px-2.5 py-0.5 rounded">উত্তর দেওয়া হয়নি</span>' : '<span class="text-xs bg-rose-100 text-rose-800 font-bold px-2.5 py-0.5 rounded">ভুল</span>');
+
+        card.className = `p-4 rounded-xl border-l-4 ${borderClass} bg-white shadow-sm space-y-2 text-sm`;
+
+        let userAnsText = isSkipped ? 'কোনো বিকল্প বেছে নেওয়া হয়নি' : `${optionLabels[userAns]}. ${q.options[userAns]}`;
+        let correctAnsText = `${optionLabels[q.correct]}. ${q.options[q.correct]}`;
+
+        card.innerHTML = `
+            <div class="flex justify-between items-start gap-2">
+                <div class="font-bold text-slate-800 text-base">${q.question}</div>
+                <div>${statusBadge}</div>
+            </div>
+            <div class="text-xs font-semibold text-blue-600">পাঠ: ${q.chapter}</div>
+            <div class="space-y-1 pt-1">
+                <div class="${isCorrect ? 'text-emerald-700 font-semibold' : 'text-rose-700 font-semibold'}">
+                    আপনার উত্তর: ${userAnsText}
+                </div>
+                ${!isCorrect ? `<div class="text-emerald-700 font-semibold">সঠিক উত্তর: ${correctAnsText}</div>` : ''}
+                <div class="text-slate-600 text-xs italic bg-slate-100 p-2 rounded border border-slate-200 mt-1">
+                    💡 <strong>ব্যাখ্যা:</strong> ${q.explanation}
+                </div>
+            </div>
+        `;
+        reviewSection.appendChild(card);
+    });
+
+    document.getElementById('score-text').innerText = `${correctCount} / ${quizData.length}`;
+    document.getElementById('correct-count').innerText = correctCount;
+    document.getElementById('incorrect-count').innerText = incorrectCount;
+    document.getElementById('skipped-count').innerText = skippedCount;
+}
+
+function restartQuiz() {
+    currentQuestionIndex = 0;
+    userAnswers = new Array(quizData.length).fill(null);
+    document.getElementById('results-screen').classList.add('hidden');
+    document.getElementById('start-screen').classList.remove('hidden');
+}
+</script>
+</body>
+</html>
